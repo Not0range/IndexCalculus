@@ -49,7 +49,7 @@ namespace IndexCalculus
                             b = true;
                             break;
                         }
-                        d = divider[0] / system[j, 0];
+                        d = divider[0] / system[j, k];
                         break;
                     }
                     if (b)
@@ -117,7 +117,7 @@ namespace IndexCalculus
             BigInteger x = -pow;
             for(int i = 0; i < divider.Length; i++)
                 x += divider[i] * roots[i];
-            x %= p - 1;
+            x = x.Mod(p - 1);
 
             Console.WriteLine("x = {0}", x);
             Console.ReadKey();
@@ -239,9 +239,9 @@ namespace IndexCalculus
                                     break;
                             }
                         }
-                        if (j == system.GetLength(1) && k != -1)
+                        if (j == system.GetLength(1) && k != -1 && !solved[k])
                         {
-                            roots[k] = (result[i] - roots[l] * system[i, l]).Mod(p - 1);
+                            roots[k] = (result[i] - roots[l] * system[i, l] / system[i, k]).Mod(p - 1);
                             solved[k] = true;
                             if (solved.All(s => s))
                                 break;
